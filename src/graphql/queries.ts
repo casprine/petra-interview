@@ -15,4 +15,6 @@ const GET_CONTACTS = gql`
   }
 `;
 
-export { GET_CONTACTS };
+export default {
+  GET_CONTACTS,
+};
