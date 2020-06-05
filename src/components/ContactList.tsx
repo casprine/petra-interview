@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Table, Space, Button } from 'antd';
 
-type Contact = {
+export type Contact = {
   first_name: string;
   last_name: string;
   contact_emails: string[];
@@ -68,5 +68,7 @@ const ContactList: React.FC<ContactListProp> = ({ loading, contacts }) => {
     </>
   );
 };
+
+export type ContactType = Contact;
 
 export default ContactList;
