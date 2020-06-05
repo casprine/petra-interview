@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Table, Space, Button } from 'antd';
 
 export type Contact = {
+  id?: string;
   first_name: string;
   last_name: string;
   contact_emails: string[];
@@ -10,10 +11,12 @@ export type Contact = {
 
 type ContactListProp = {
   loading: boolean;
+  deletingContact: boolean;
+  handleDeleteContact: (id: string) => void;
   contacts: Array<Contact>;
 };
 
-const ContactList: React.FC<ContactListProp> = ({ loading, contacts }) => {
+const ContactList: React.FC<ContactListProp> = ({ loading, contacts, deletingContact, handleDeleteContact }) => {
   const columns = [
     {
       title: 'First Name',
@@ -43,12 +46,13 @@ const ContactList: React.FC<ContactListProp> = ({ loading, contacts }) => {
 
     {
       title: 'Actions',
-
-      render: () => {
+      render: ({ id }: { id: string }) => {
         return (
           <Space size="middle">
             <Button type="primary">Edit</Button>
-            <Button danger>Delete</Button>
+            <Button danger onClick={() => handleDeleteContact(id)}>
+              Delete
+            </Button>
           </Space>
         );
       },

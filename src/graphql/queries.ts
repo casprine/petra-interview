@@ -3,6 +3,7 @@ import { gql } from '@apollo/client';
 const GET_CONTACTS = gql`
   query {
     contact {
+      id
       first_name
       last_name
       contact_emails {

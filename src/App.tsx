@@ -18,6 +18,7 @@ function App() {
     },
   });
 
+  // create a new contact
   const [createContact, { loading: creatingContact }] = useMutation(mutations.CREATE_CONTACT, {
     awaitRefetchQueries: true,
     refetchQueries: [{ query: queries.GET_CONTACTS }],
@@ -29,14 +30,26 @@ function App() {
     },
   });
 
-  const [formData, setFormData] = useState<ContactType>({
-    first_name: 'Casprine',
-    last_name: 'Assempah',
-    contact_emails: ['casprine.001@gmail.com , cas@gmail.com'],
-    contact_phone_numbers: ['0545179957', '0241556521'],
+  // delete contact
+  const [deleteContact, { loading: deletingContact }] = useMutation(mutations.DELETE_CONTACT, {
+    awaitRefetchQueries: true,
+    refetchQueries: [{ query: queries.GET_CONTACTS }],
+    onCompleted: () => {
+      alert('Contact deleted!');
+    },
+    onError: (error) => {
+      console.error(error);
+    },
   });
 
-  const [showForm, setShowForm] = useState(true);
+  const [formData, setFormData] = useState<ContactType>({
+    first_name: '',
+    last_name: '',
+    contact_emails: [''],
+    contact_phone_numbers: [],
+  });
+
+  const [showForm, setShowForm] = useState(false);
 
   if (error) {
     return <h1>An error occurred while fetching contacts</h1>;
@@ -52,7 +65,12 @@ function App() {
           Add New Contact
         </Button>
       </Row>
-      <ContactList contacts={contacts} loading={loading} />
+      <ContactList
+        handleDeleteContact={handleDeleteContact}
+        deletingContact={deletingContact}
+        contacts={contacts}
+        loading={loading}
+      />
 
       <CreateContactForm
         formData={formData}
@@ -64,6 +82,14 @@ function App() {
       />
     </main>
   );
+
+  function handleDeleteContact(id: string) {
+    deleteContact({
+      variables: {
+        id,
+      },
+    });
+  }
 
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
     const name = e.currentTarget.name;

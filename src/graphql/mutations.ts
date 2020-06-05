@@ -29,6 +29,17 @@ const CREATE_CONTACT = gql`
   }
 `;
 
+const DELETE_CONTACT = gql`
+  mutation($id: uuid) {
+    delete_contact(where: { id: { _eq: $id } }) {
+      returning {
+        id
+      }
+    }
+  }
+`;
+
 export default {
   CREATE_CONTACT,
+  DELETE_CONTACT,
 };
