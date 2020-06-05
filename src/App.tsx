@@ -46,7 +46,7 @@ function App() {
     first_name: '',
     last_name: '',
     contact_emails: [''],
-    contact_phone_numbers: [],
+    contact_phone_numbers: [''],
   });
 
   const [showForm, setShowForm] = useState(false);

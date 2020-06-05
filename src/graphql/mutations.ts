@@ -30,7 +30,19 @@ const CREATE_CONTACT = gql`
 `;
 
 const DELETE_CONTACT = gql`
-  mutation($id: uuid) {
+  mutation($id: uuid!) {
+    delete_contact_email(where: { contact_id: { _eq: $id } }) {
+      returning {
+        id
+      }
+    }
+
+    delete_contact_phone_number(where: { contact_id: { _eq: $id } }) {
+      returning {
+        id
+      }
+    }
+
     delete_contact(where: { id: { _eq: $id } }) {
       returning {
         id
