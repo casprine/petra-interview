@@ -12,11 +12,12 @@ export type Contact = {
 type ContactListProp = {
   loading: boolean;
   deletingContact: boolean;
-  handleDeleteContact: (id: string) => void;
+  handleDeleteContact: (record: Contact) => void;
   contacts: Array<Contact>;
+  onEditClick: (record: Contact) => void;
 };
 
-const ContactList: React.FC<ContactListProp> = ({ loading, contacts, deletingContact, handleDeleteContact }) => {
+const ContactList: React.FC<ContactListProp> = ({ loading, contacts, handleDeleteContact, onEditClick }) => {
   const columns = [
     {
       title: 'First Name',
@@ -46,11 +47,13 @@ const ContactList: React.FC<ContactListProp> = ({ loading, contacts, deletingCon
 
     {
       title: 'Actions',
-      render: ({ id }: { id: string }) => {
+      render: (record: Contact) => {
         return (
           <Space size="middle">
-            <Button type="primary">Edit</Button>
-            <Button danger onClick={() => handleDeleteContact(id)}>
+            <Button onClick={() => onEditClick(record)} type="primary">
+              Edit
+            </Button>
+            <Button danger onClick={() => handleDeleteContact(record)}>
               Delete
             </Button>
           </Space>

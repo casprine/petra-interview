@@ -11,6 +11,8 @@ type CreateContactFormProps = {
   formData: ContactType;
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   creatingContact: boolean;
+  updateContact: () => void;
+  updateInstead?: boolean;
 };
 
 const CreateContactForm: React.FC<CreateContactFormProps> = ({
@@ -19,19 +21,26 @@ const CreateContactForm: React.FC<CreateContactFormProps> = ({
   handleCancel,
   handleInputChange,
   formData,
+  updateContact,
+  updateInstead,
 }) => {
   const [form] = Form.useForm();
 
   return (
     <Modal
-      title="Create Contact"
-      okText="Create"
+      title={updateInstead ? 'Update Contact' : 'Create Contact'}
+      okText={updateInstead ? 'Update' : 'Create'}
       visible={visible}
       onOk={() => {
         form
           .validateFields()
           .then(() => {
             form.resetFields();
+
+            if (updateInstead) {
+              updateContact();
+            }
+
             handleOk();
           })
           .catch((info) => {

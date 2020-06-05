@@ -51,7 +51,18 @@ const DELETE_CONTACT = gql`
   }
 `;
 
+const UPDATE_CONTACT = gql`
+  mutation($id: uuid, $firstName: String, $lastName: String) {
+    update_contact(where: { id: { _eq: $id } }, _set: { first_name: $firstName, last_name: $lastName }) {
+      returning {
+        id
+      }
+    }
+  }
+`;
+
 export default {
   CREATE_CONTACT,
   DELETE_CONTACT,
+  UPDATE_CONTACT,
 };
